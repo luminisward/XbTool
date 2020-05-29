@@ -16,18 +16,25 @@ namespace XbTool
             string dbName;
             string dbUsername;
             string dbPassword;
+            string dbHost;
 
-            Console.Write("Enter Database Name: ");
-            dbName = Console.ReadLine();
+            //Console.Write("Enter Database Name: ");
+            //dbName = Console.ReadLine();
 
-            Console.Write("Enter User Name: ");
-            dbUsername = Console.ReadLine();
+            //Console.Write("Enter User Name: ");
+            //dbUsername = Console.ReadLine();
 
-            Console.Write("Enter User Password: ");
-            dbPassword = GetHiddenConsoleInput();
-            Console.WriteLine();
+            //Console.Write("Enter User Password: ");
+            //dbPassword = GetHiddenConsoleInput();
+            //Console.WriteLine();
 
-            string connString = $"Host=localhost;Username={dbUsername};Password={dbPassword};Database={dbName};";
+            dbName = "xb1";
+            dbUsername = "postgres";
+            dbPassword = "123";
+            dbHost = "192.168.66.194";
+            schemaName = "data";
+
+            string connString = $"Host={dbHost};Username={dbUsername};Password={dbPassword};Database={dbName};";
 
             using (var conn = new NpgsqlConnection(connString))
             {
@@ -87,7 +94,7 @@ namespace XbTool
         {
             var columns = new List<string>();
 
-            columns.Add("\"row_id\" INTEGER");
+            columns.Add("\"row_id\" INTEGER PRIMARY KEY");
 
             foreach (BdatMember member in table.Members)
             {

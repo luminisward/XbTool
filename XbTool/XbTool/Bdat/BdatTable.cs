@@ -11,7 +11,7 @@ namespace XbTool.Bdat
     [DebuggerDisplay("{" + nameof(Name) + ", nq}")]
     public class BdatTable
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public string Filename { get; set; }
 
         public int EncryptionFlag { get; } // Maybe other flags too?

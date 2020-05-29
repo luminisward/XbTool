@@ -37,6 +37,13 @@ namespace XbTool.Bdat
         {
             Game = game;
             Tables = ReadAllBdats(filenames, game);
+
+            Tables = Tables.Where(table => table.Name != null).ToArray();
+            for (int i=0;i< Tables.Length; i++)
+            {
+                Tables[i].Name = Tables[i].Filename + "." + Tables[i].Name;
+            }
+
             TablesDict = Tables.ToDictionary(x => x.Name, x => x);
             if (readMetadata) ReadMetadata();
         }
@@ -78,9 +85,9 @@ namespace XbTool.Bdat
             ReadTableInfo();
             Types = CalculateBdatTypes(Tables);
             GetBdatRefs();
-            ReadArrayInfos();
-            GetTableDesc();
-            MarkFlagMembers();
+            // ReadArrayInfos();
+            // GetTableDesc();
+            // MarkFlagMembers();
         }
 
         public static BdatTable[] ReadAllBdats(IFileSystem fs, IProgressReport progress = null, string lang = "gb")
@@ -136,7 +143,8 @@ namespace XbTool.Bdat
                 DataBuffer tableBuffer = file.Slice(offset, length);
 
                 var table = new BdatTable(tableBuffer);
-                if (tableCount > 1) table.Filename = Path.GetFileNameWithoutExtension(filename);
+                // if (tableCount > 1) table.Filename = Path.GetFileNameWithoutExtension(filename);
+                table.Filename = Path.GetFileNameWithoutExtension(filename);
                 tables[i] = table;
             }
 
